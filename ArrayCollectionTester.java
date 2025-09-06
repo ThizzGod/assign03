@@ -9,8 +9,10 @@ class ArrayCollectionTester {
 	
 	ArrayCollection<String> smallCollection; 
 	ArrayCollection<Integer> largeCollection;
+	
 	ArrayCollection<String> smallSubCollection;
 	ArrayCollection<Integer> largeSubCollection;
+	
 	ArrayCollection<String> smallCollectionAppendage;
 	ArrayCollection<Integer> largeCollectionAppendage;
 	
