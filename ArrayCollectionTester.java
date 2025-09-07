@@ -40,7 +40,7 @@ class ArrayCollectionTester {
 		
 		//setup large collection over 100 elements
 		largeCollection = new ArrayCollection<Integer>();
-		for (int i = 0; i <= 150; i++) {
+		for (int i = 0; i < 150; i++) {
 			largeCollection.add(i);
 		}
 		
@@ -51,7 +51,7 @@ class ArrayCollectionTester {
 		smallSubCollection.add("Christopher");
 		
 		largeSubCollection = new ArrayCollection<Integer>();
-		for (int i = 50; i <= 100; i++) {
+		for (int i = 50; i < 100; i++) {
 			largeSubCollection.add(i);
 		}
 		
@@ -62,7 +62,7 @@ class ArrayCollectionTester {
 		smallCollectionAppendage.add("Adrianna");
 		
 		largeCollectionAppendage = new ArrayCollection<Integer>();
-		for (int i = 151; i <= 200; i++) {
+		for (int i = 150; i < 200; i++) {
 			largeCollectionAppendage.add(i);
 		}
 		
@@ -213,17 +213,33 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testRemoveAllLargeCollection() {
-		
+		assertTrue(largeCollection.removeAll(largeSubCollection));
+		assertEquals(100, largeCollection.size());
 	}
 	
 	@Test
 	void testRemoveAllSmallCollection() {
-		
+		assertTrue(smallCollection.removeAll(smallSubCollection));
+		assertEquals(5, smallCollection.size());
+	}
+	
+	@Test
+	void testRemoveAllNoItemsRemoved() {
+		assertFalse(smallCollection.removeAll(smallCollectionAppendage));
+		assertEquals(8, smallCollection.size());
+	}
+	
+	@Test
+	void testRemoveAllSomeItemsRemoved() {
+		smallSubCollection.add("Jackie Jr");
+		assertTrue(smallCollection.removeAll(smallSubCollection));
+		assertEquals(5, smallCollection.size());
+		assertFalse(smallCollection.contains("Jackie Jr"));
 	}
 	
 	@Test
 	void testContainsAllTrue() {
-		assertTrue(smallCollection.contains(smallSubCollection));
+		assertTrue(smallCollection.containsAll(smallSubCollection));
 	}
 	
 	@Test
@@ -278,7 +294,7 @@ class ArrayCollectionTester {
 	@Test
 	void testRetainAllElementsExist() {
 		assertFalse(largeCollection.retainAll(largeCollection));
-		assertEquals(151, largeCollection.size());
+		assertEquals(150, largeCollection.size());
 	}
 	
 	@Test
