@@ -205,7 +205,6 @@ class ArrayCollectionTester {
 	void clearSmallColllection() {
 		smallCollection.clear();
 		assertEquals(0, smallCollection.size());
-		
 	}
 	
 	@Test
