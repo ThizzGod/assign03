@@ -2,10 +2,12 @@ package assign03;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.JUnitCommandLineParseResult.CommandLineParserError;
 
 class ArrayCollectionTester {
 	
@@ -232,7 +234,17 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testToSortedList() {
-		
+		ArrayList<String> sortedComparison = new ArrayList<String>();
+		sortedComparison.add("Carmela");
+		sortedComparison.add("Chistopher");
+		sortedComparison.add("Furio");
+		sortedComparison.add("Jennifer");
+		sortedComparison.add("Junior");
+		sortedComparison.add("Paulie");
+		sortedComparison.add("Silvio");
+		sortedComparison.add("Tony");
+		ArrayList<String> sortedList = smallCollection.toSortedList((s1, s2) -> s1.compareTo(s2));
+		assertEquals(sortedComparison, sortedList);
 	}
 	
 	@Test
