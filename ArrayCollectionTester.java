@@ -157,16 +157,6 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
-	void testSmallArrayDouble() {
-		
-	}
-	
-	@Test
-	void testLargeArrayDouble() {
-		
-	}
-	
-	@Test
 	void addAllSmallCollection() {
 		assertTrue(smallCollection.addAll(smallCollectionAppendage));
 		assertEquals(11, smallCollection.size());
