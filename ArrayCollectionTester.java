@@ -9,6 +9,7 @@ class ArrayCollectionTester {
 	
 	ArrayCollection<String> smallCollection; 
 	ArrayCollection<Integer> largeCollection;
+	ArrayCollection<String> emptyCollection;
 	
 	ArrayCollection<String> smallSubCollection;
 	ArrayCollection<Integer> largeSubCollection;
@@ -18,6 +19,8 @@ class ArrayCollectionTester {
 	
 	@BeforeEach
 	void setup() {
+		//setup empty collection
+		emptyCollection = new ArrayCollection<String>();
 		//setup small collection less than 10 elements
 		smallCollection = new ArrayCollection<String>();
 		smallCollection.add("Tony");
@@ -240,22 +243,28 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testRetainAllElementsExist() {
-		
+		assertFalse(largeCollection.retainAll(largeCollection));
+		assertEquals(151, largeCollection.size());
 	}
 	
 	@Test
 	void testRetainAllElementsDoNotExist() {
-		
+		assertTrue(smallCollection.retainAll(smallCollectionAppendage));
+		assertEquals(0, smallCollection.size());
 	}
 	
 	@Test
 	void testRetainAllSomeElementsExist() {
-		
+		smallSubCollection.add("Jackie Jr");
+		assertTrue(smallCollection.retainAll(smallSubCollection));
+		assertEquals(3, smallCollection.size());
+		assertFalse(smallCollection.contains("Jackie Jr"));
 	}
 	
 	@Test
 	void testRetainAllEmptyCollection() {
-		
+		assertTrue(smallCollection.retainAll(emptyCollection));
+		assertEquals(0, smallCollection.size());
 	}
 	
  }
