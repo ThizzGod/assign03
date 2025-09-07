@@ -168,22 +168,27 @@ class ArrayCollectionTester {
 	
 	@Test
 	void addAllSmallCollection() {
-		
+		assertTrue(smallCollection.addAll(smallCollectionAppendage));
+		assertEquals(11, smallCollection.size());
 	}
 	
 	@Test
 	void addAllLargeCollection() {
-		
+		assertTrue(largeCollection.addAll(largeCollectionAppendage));
+		assertEquals(200, largeCollection.size());
 	}
 	
 	@Test
 	void addAllEmptyCollection() {
-		
+		assertFalse(smallCollection.addAll(emptyCollection));
 	}
 	
 	@Test
 	void addAllCollectionContainsDuplicates() {
-		
+		smallSubCollection.add("Meadow");
+		assertTrue(smallCollection.addAll(smallSubCollection));
+		assertTrue(smallCollection.contains("Meadow"));
+		assertEquals(9, smallCollection.size());
 	}
 	
 	@Test
