@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.JUnitCommandLineParseResult.CommandLineParserError;
 
 class ArrayCollectionTester {
 	
@@ -224,12 +223,12 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testContainsAllTrue() {
-		
+		assertTrue(smallCollection.contains(smallSubCollection));
 	}
 	
 	@Test
 	void testContainsAllFalse() {
-		
+		assertFalse(largeCollection.containsAll(largeCollectionAppendage));
 	}
 	
 	@Test
