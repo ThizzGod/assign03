@@ -138,22 +138,22 @@ class ArrayCollectionTester {
 	
 	@Test 
 	void testContainsElementTrueLargeArray() {
-		
+		assertTrue(largeCollection.contains(5));
 	}
 	
 	@Test
 	void testContainsElementTrueSamllArray() {
-		
+		assertTrue(smallCollection.contains("Tony"));
 	}
 
 	@Test
 	void testContainsElementFalseLargeArray() {
-		
+		assertFalse(largeCollection.contains(-1));
 	}
 	
 	@Test 
 	void testContainsElementFalseSmallArray() {
-		
+		assertFalse(smallCollection.contains("AJ"));
 	}
 	
 	@Test
