@@ -103,6 +103,26 @@ class ArrayCollectionTester {
 		
 	}
 	
+	@Test
+	void testIteratorNextReturnsFalse() {
+		
+	}
+	
+	@Test
+	void testIteratorRemoveRemovesLastItemShown() {
+		
+	}
+	
+	@Test
+	void testIteratorRemoveThrowsNoSuchElementException() {
+		
+	}
+	
+	@Test
+	void testIteratorRemoveThrowsIllegalStateExceptionWhenUsedTwice() {
+		
+	}
+	
 	@Test 
 	void testContainsElementTrueLargeArray() {
 		
