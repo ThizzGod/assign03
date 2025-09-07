@@ -188,17 +188,32 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testRemoveStartOfCollection() {
-		
+		assertTrue(largeCollection.remove(0));
+		assertFalse(largeCollection.contains(0));
+		assertEquals(149, largeCollection.size());
+			
 	}
 	
 	@Test
 	void testRemoveElementMiddleOfCollection() {
+		assertTrue(largeCollection.remove(75));
+		assertFalse(largeCollection.contains(75));
+		assertEquals(149, largeCollection.size());
 		
 	}
 	
 	@Test
 	void testRemoveElementEndOfCollection() {
+		assertTrue(largeCollection.remove(149));
+		assertFalse(largeCollection.contains(149));
+		assertEquals(149, largeCollection.size());
 		
+	}
+	
+	@Test 
+	void testRemoveElementNotInCollection() {
+		assertFalse(smallCollection.remove("Artie"));
+		assertEquals(8, smallCollection.size());
 	}
 	
 	@Test
