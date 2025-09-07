@@ -2,6 +2,8 @@ package assign03;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +18,9 @@ class ArrayCollectionTester {
 	
 	ArrayCollection<String> smallCollectionAppendage;
 	ArrayCollection<Integer> largeCollectionAppendage;
+	
+	Iterator<String> smallCollectionIterator;
+	Iterator<Integer> largeCollectionIterator;
 	
 	@BeforeEach
 	void setup() {
@@ -59,6 +64,10 @@ class ArrayCollectionTester {
 		for (int i = 151; i <= 200; i++) {
 			largeCollectionAppendage.add(i);
 		}
+		
+		//setup iterators
+		largeCollectionIterator = largeCollection.iterator();
+		smallCollectionIterator = smallCollection.iterator();
 	}
 	
 	@Test
@@ -227,18 +236,32 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
-	void testToArrayLargeColletion() {
-		
+	void testToArrayArrayTypeIsObject() {
+		Object[] objArray = smallCollection.toArray();
+		assertNotEquals(String.class, objArray.getClass().getComponentType());
+		assertEquals(Object.class, objArray.getClass().getComponentType());
+	}
+	
+	@Test
+	void testToArrayLargeCollection() {
+		Object[] largeArray = largeCollection.toArray();
+		assertEquals(largeArray.length, largeCollection.size());
+		assertEquals(largeCollectionIterator.next(), (Integer) largeArray[0]);
 	}
 	
 	@Test
 	void testToArraySmallCollection() {
+		Object[] smallArray = smallCollection.toArray();
+		assertEquals(smallArray.length, smallCollection.size());
+		assertEquals(smallCollectionIterator.next(), (Integer) smallArray[0]);
 		
 	}
 	
 	@Test
 	void testToArrayEmptyCollection(){
-
+		Object[] emptyArray = emptyCollection.toArray();
+		assertEquals(emptyArray.length, emptyCollection.size());
+		
 	}
 	
 	@Test
