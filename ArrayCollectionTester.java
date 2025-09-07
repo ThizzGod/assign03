@@ -203,12 +203,15 @@ class ArrayCollectionTester {
 	
 	@Test
 	void clearSmallColllection() {
+		smallCollection.clear();
+		assertEquals(0, smallCollection.size());
 		
 	}
 	
 	@Test
 	void clearLargeCollection() {
-		
+		largeCollection.clear();
+		assertEquals(0, largeCollection.size());
 	}
 	
 	@Test
