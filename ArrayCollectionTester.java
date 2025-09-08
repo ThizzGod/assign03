@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,7 +98,7 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
-	void testIteratorReturnsAnIterator() {
+	void testIteratorMethodReturnsAnIterator() {
 		
 	}
 	
@@ -111,29 +112,41 @@ class ArrayCollectionTester {
 		
 	}
 	
-	@Test
-	void testIteratorNextReturnsNextElement() {
-		
-	}
 	
 	@Test
-	void testIteratorNextReturnsFalse() {
-		
+	void testIteratorHasNextReturnsFalse() {
+		for (int i = 0; i < 8; i++) {
+			smallCollectionIterator.next();
+		}
+		assertFalse(smallCollectionIterator.hasNext());
+	}
+
+	@Test
+	void testIteratorNextReturnsNextElement() {
+		assertEquals(0, largeCollectionIterator.next());
 	}
 	
 	@Test
 	void testIteratorRemoveRemovesLastItemShown() {
-		
+		int firstItem = largeCollectionIterator.next();
+		largeCollectionIterator.remove();
+		assertFalse(largeCollection.contains(firstItem));
 	}
 	
 	@Test
-	void testIteratorRemoveThrowsNoSuchElementException() {
-		
+	void testIteratorNextThrowsNoSuchElementException() {
+		for (int i = 0; i < 8; i++) {
+			smallCollectionIterator.next();
+		}
+		assertThrows(NoSuchElementException.class, () -> smallCollectionIterator.next());
 	}
 	
 	@Test
 	void testIteratorRemoveThrowsIllegalStateExceptionWhenUsedTwice() {
-		
+		smallCollectionIterator.next();
+		smallCollectionIterator.next();
+		smallCollectionIterator.remove();
+		assertThrows(IllegalStateException.class, () -> smallCollectionIterator.remove());
 	}
 	
 	@Test 
@@ -157,24 +170,24 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
-	void addAllSmallCollection() {
+	void testAddAllSmallCollection() {
 		assertTrue(smallCollection.addAll(smallCollectionAppendage));
 		assertEquals(11, smallCollection.size());
 	}
 	
 	@Test
-	void addAllLargeCollection() {
+	void testAddAllLargeCollection() {
 		assertTrue(largeCollection.addAll(largeCollectionAppendage));
 		assertEquals(200, largeCollection.size());
 	}
 	
 	@Test
-	void addAllEmptyCollection() {
+	void testAddAllEmptyCollection() {
 		assertFalse(smallCollection.addAll(emptyCollection));
 	}
 	
 	@Test
-	void addAllCollectionContainsDuplicates() {
+	void testAddAllCollectionContainsDuplicates() {
 		smallSubCollection.add("Meadow");
 		assertTrue(smallCollection.addAll(smallSubCollection));
 		assertTrue(smallCollection.contains("Meadow"));
