@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * 
- * @author Daniel Kopta and ??
+ * @author Daniel Kopta and Josi Gac and Max Barker
  * A utility class for searching, containing just one method (see below).
  *
  */

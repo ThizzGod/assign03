@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * @author Daniel Kopta and ??
+ * @author Daniel Kopta and Josi Gac and Max Barker
  * Implements the Collection interface using an array as storage.
  * The array must grow as needed.
  * An ArrayCollection can not contain duplicates.
@@ -43,18 +43,36 @@ public class ArrayCollection<T> implements Collection<T> {
 	@SuppressWarnings("unchecked")
 	private void grow()
 	{
-		// TODO fill in
-		// You will need to use something similar to the code in the constructor above to create a new array.
+		T newData[] = (T[]) new Object[size*2];
+		for (int i = 0; i < size; i++) {
+			newData[i] = data[i];
+		}
+		data = newData;
 	}
 
 
 	public boolean add(T arg0) {
-		// TODO Auto-generated method stub
+		if (!this.contains(arg0)) {
+			data[size] = arg0;
+			size++;
+			if (size == data.length) {
+				this.grow();
+			}
+			return true;
+		}
 		return false;
 	}
 
 	public boolean addAll(Collection<? extends T> arg0) {
-		// TODO Auto-generated method stub
+		int previousSize = size;
+		for (T element : arg0) {
+			if (!this.contains(element)) {
+				this.add(element);
+			}
+		}
+		if (size > previousSize) {
+			return true;
+		}
 		return false;
 	}
 
@@ -63,32 +81,58 @@ public class ArrayCollection<T> implements Collection<T> {
 	}
 
 	public boolean contains(Object arg0) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < size; i++) {
+			if (data[i].equals(arg0)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public boolean containsAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
-		return false;
+		for (Object element : arg0) {
+			if (!this.contains(element)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if (size == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayCollectionIterator();
 	}
 
 	public boolean remove(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!this.contains(arg0)) {
+			return false;
+		}
+		Iterator<T> iterator = this.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().equals(arg0)) {
+				iterator.remove();
+			}
+		}
+		return true;
 	}
 
 	public boolean removeAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
+		int previousSize = size;
+		Iterator<T> iterator = this.iterator();
+		while (iterator.hasNext()) {
+			if (arg0.contains(iterator.next())) {
+				iterator.remove();
+			}
+		}
+		if (size < previousSize) {
+			return true;
+		}
 		return false;
 	}
 
@@ -98,8 +142,8 @@ public class ArrayCollection<T> implements Collection<T> {
 	}
 
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return size;
 	}
 
 	public Object[] toArray() {
@@ -137,29 +181,51 @@ public class ArrayCollection<T> implements Collection<T> {
 
 	/**
 	 * 
-	 * @author ??
+	 * @author Josi Gac and Max Barker
 	 * Describe your ArrayCollectionIterator class here.
 	 *
 	 */
 	private class ArrayCollectionIterator implements Iterator<T>
 	{
+		int cursor;
+		int removeCallsConsecutive;
 		public ArrayCollectionIterator()
 		{
-			// TODO Auto-generated method stub
+			cursor = 0;
+			removeCallsConsecutive = 0;
 		}
 
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			if (cursor + 1 > size) {
+				return false;
+			}
+			return true;
 		}
 
 		public T next() {
-			// TODO Auto-generated method stub
-			return null;
+				if (cursor == size) {
+					throw new NoSuchElementException();
+				}
+				T returnValue = data[cursor];
+				cursor++;
+				if (removeCallsConsecutive == 1) {
+					removeCallsConsecutive--;
+				}
+				return returnValue;
 		}
 
 		public void remove() {
-			// TODO Auto-generated method stub
+			if (cursor == 0) {
+				throw new IllegalStateException();
+			}
+			if (removeCallsConsecutive >= 1) {
+				throw new IllegalStateException();
+			}
+			for (int i = cursor - 1; i < size; i++) {
+				data[i] = data[i + 1];
+			}
+			removeCallsConsecutive++;
+			size--;
 		}
 
 	}
