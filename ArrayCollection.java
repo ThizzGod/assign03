@@ -226,6 +226,7 @@ public class ArrayCollection<T> implements Collection<T> {
 			}
 			removeCallsConsecutive++;
 			size--;
+			cursor--;
 		}
 
 	}
