@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * 
- * @author Daniel Kopta and ??
+ * @author Daniel Kopta and Josi Gac and Max Barker
  * A utility class for searching, containing just one method (see below).
  *
  */
@@ -26,7 +26,21 @@ public class SearchUtil {
 	public static <T> boolean binarySearch(ArrayList<T> list, T item, Comparator<? super T> cmp)
 	{
 	
-		//TODO: Fill in with a correct binary search implementation
+		int left = 0;
+		int right = list.size() - 1;
+		while (left <= right) {
+			int mid = left + ((right - left) / 2);
+			if (item.equals(list.get(mid))) {
+				return true;
+			}
+			if (cmp.compare(item, list.get(mid)) < 0) {
+				right = mid - 1;
+			}
+			if (cmp.compare(item, list.get(mid)) > 0) {
+				left = mid + 1;
+			}
+		}
+		
 		return false;
 	}	
 }

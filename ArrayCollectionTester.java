@@ -24,6 +24,8 @@ class ArrayCollectionTester {
 	Iterator<String> smallCollectionIterator;
 	Iterator<Integer> largeCollectionIterator;
 	
+	SearchUtil binarySearch;
+	
 	@BeforeEach
 	void setup() {
 		//setup empty collection
@@ -36,7 +38,7 @@ class ArrayCollectionTester {
 		smallCollection.add("Jennifer");
 		smallCollection.add("Silvio");
 		smallCollection.add("Paulie");
-		smallCollection.add("Chistopher");
+		smallCollection.add("Christopher");
 		smallCollection.add("Furio");
 		
 		//setup large collection over 100 elements
@@ -74,71 +76,80 @@ class ArrayCollectionTester {
 	
 	@Test
 	void testSizeLargeCollection() {
-		
+		assertEquals(150, largeCollection.size());
 	}
 	
 	@Test
 	void testSizeSmallCollection() {
-		
+		assertEquals(8, smallCollection.size());
 	}
 	
 	@Test
 	void testIsEmpty() {
-		
+		assertTrue(emptyCollection.isEmpty());
+		assertFalse(smallCollection.isEmpty());
 	}
 	
 	@Test
 	void testAddElementSmallCollection() {
-		
+		assertTrue(smallCollection.add("Johnny Sack"));
+		assertEquals(9, smallCollection.size());
+		assertTrue(smallCollection.contains("Johnny Sack"));
 	}
 	
 	@Test
 	void testAddElementLargeCollection() {
-		
+		assertTrue(largeCollection.add(200));
+		assertEquals(151, largeCollection.size());
+		assertTrue(largeCollection.contains(200));
 	}
 	
 	@Test
-	void testIteratorMethodReturnsAnIterator() {
-		
+	void testIteratorReturnsAnIterator() {
+		assertNotNull(smallCollection.iterator());
 	}
 	
 	@Test
 	void testIteratorHasNextEmptyCollection() {
-		
+		Iterator<String> emptyIterator = emptyCollection.iterator();
+		assertFalse(emptyIterator.hasNext());
 	}
 	
 	@Test
 	void testIteratorHasNextTrue() {
-		
+		assertTrue(smallCollectionIterator.hasNext());
+		assertTrue(largeCollectionIterator.hasNext());
 	}
 	
-	
-	@Test
-	void testIteratorHasNextReturnsFalse() {
-		for (int i = 0; i < 8; i++) {
-			smallCollectionIterator.next();
-		}
-		assertFalse(smallCollectionIterator.hasNext());
-	}
-
 	@Test
 	void testIteratorNextReturnsNextElement() {
-		assertEquals(0, largeCollectionIterator.next());
+		assertEquals("Tony", smallCollectionIterator.next());
+		assertEquals(0, (int) largeCollectionIterator.next());
+	}
+	
+	@Test
+	void testIteratorNextReturnsFalse() {
+	    Iterator<String> emptyIterator = emptyCollection.iterator();
+	    try {
+	        emptyIterator.next();
+	        fail("expected NoSuchElementException");
+	    } catch (NoSuchElementException e) {
+	    }
 	}
 	
 	@Test
 	void testIteratorRemoveRemovesLastItemShown() {
-		int firstItem = largeCollectionIterator.next();
-		largeCollectionIterator.remove();
-		assertFalse(largeCollection.contains(firstItem));
+		assertEquals("Tony", smallCollectionIterator.next());
+		smallCollectionIterator.remove();
+		assertFalse(smallCollection.contains("Tony"));
 	}
 	
 	@Test
 	void testIteratorNextThrowsNoSuchElementException() {
-		for (int i = 0; i < 8; i++) {
+		for (int i=0; i < 8; i ++) {
 			smallCollectionIterator.next();
 		}
-		assertThrows(NoSuchElementException.class, () -> smallCollectionIterator.next());
+		assertThrows(NoSuchElementException.class, () -> smallCollectionIterator.next()); 
 	}
 	
 	@Test
@@ -146,7 +157,8 @@ class ArrayCollectionTester {
 		smallCollectionIterator.next();
 		smallCollectionIterator.next();
 		smallCollectionIterator.remove();
-		assertThrows(IllegalStateException.class, () -> smallCollectionIterator.remove());
+
+		assertThrows(IllegalStateException.class, () -> smallCollectionIterator.remove()); 
 	}
 	
 	@Test 
@@ -170,24 +182,24 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
-	void testAddAllSmallCollection() {
+	void addAllSmallCollection() {
 		assertTrue(smallCollection.addAll(smallCollectionAppendage));
 		assertEquals(11, smallCollection.size());
 	}
 	
 	@Test
-	void testAddAllLargeCollection() {
+	void addAllLargeCollection() {
 		assertTrue(largeCollection.addAll(largeCollectionAppendage));
 		assertEquals(200, largeCollection.size());
 	}
 	
 	@Test
-	void testAddAllEmptyCollection() {
+	void addAllEmptyCollection() {
 		assertFalse(smallCollection.addAll(emptyCollection));
 	}
 	
 	@Test
-	void testAddAllCollectionContainsDuplicates() {
+	void addAllCollectionContainsDuplicates() {
 		smallSubCollection.add("Meadow");
 		assertTrue(smallCollection.addAll(smallSubCollection));
 		assertTrue(smallCollection.contains("Meadow"));
@@ -268,6 +280,11 @@ class ArrayCollectionTester {
 	}
 	
 	@Test
+	void testContainsAllTrueLargeCollection() {
+		assertTrue(largeCollection.containsAll(largeSubCollection));
+	}
+	
+	@Test
 	void testContainsAllFalse() {
 		assertFalse(largeCollection.containsAll(largeCollectionAppendage));
 	}
@@ -276,7 +293,7 @@ class ArrayCollectionTester {
 	void testToSortedList() {
 		ArrayList<String> sortedComparison = new ArrayList<String>();
 		sortedComparison.add("Carmela");
-		sortedComparison.add("Chistopher");
+		sortedComparison.add("Christopher");
 		sortedComparison.add("Furio");
 		sortedComparison.add("Jennifer");
 		sortedComparison.add("Junior");
@@ -305,7 +322,7 @@ class ArrayCollectionTester {
 	void testToArraySmallCollection() {
 		Object[] smallArray = smallCollection.toArray();
 		assertEquals(smallArray.length, smallCollection.size());
-		assertEquals(smallCollectionIterator.next(), (Integer) smallArray[0]);
+		assertEquals(smallCollectionIterator.next(), smallArray[0]);
 		
 	}
 	
@@ -342,4 +359,17 @@ class ArrayCollectionTester {
 		assertEquals(0, smallCollection.size());
 	}
 	
+	@Test
+	void testArrayListBinarySearchTrue() {
+		binarySearch = new SearchUtil();
+		ArrayList sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
+		assertTrue(binarySearch.binarySearch(sortedLarge, 75, (i1, i2) -> i1.compareTo(i2)));
+	}
+	
+	@Test
+	void testArrayListBinarySearchFalse() {
+		binarySearch = new SearchUtil();
+		ArrayList sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
+		assertFalse(binarySearch.binarySearch(sortedLarge, 600, (i1, i2) -> i1.compareTo(i2)));
+	}
  }
