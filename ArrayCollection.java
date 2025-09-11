@@ -213,7 +213,11 @@ public class ArrayCollection<T> implements Collection<T> {
 	public int size() {
 		return size;
 	}
-
+	
+	/**
+	 * Returns an new array of type Object containing the elements
+	 * of this collection.
+	 */
 	public Object[] toArray() {
 		Object[] objectArray = new Object[size];
 		for (int i = 0; i < size; i++) {
@@ -263,9 +267,11 @@ public class ArrayCollection<T> implements Collection<T> {
 
 
 	/**
-	 * 
 	 * @author Josi Gac and Max Barker
-	 *
+	 * This private Iterator class iterates over and returns the private
+	 * instance variables of an ArrayCollection object. Calling the iterator
+	 * method of an ArrayCollection object will return an ArrayCollectionIterator object.
+	 * Use this generated object in order to access the elements of an ArrayCollection.
 	 */
 	private class ArrayCollectionIterator implements Iterator<T>
 	{
@@ -273,10 +279,18 @@ public class ArrayCollection<T> implements Collection<T> {
 		int removeCallsConsecutive;
 		public ArrayCollectionIterator()
 		{
-			cursor = 0;
-			removeCallsConsecutive = 0;
+			cursor = 0; //tracks where the next item of the collection will be
+			removeCallsConsecutive = 0; //tracks how many times in a row remove() has been called
 		}
 
+		/**
+		 * Returns true if there is another item in the collection after
+		 * the current cursor position. Otherwise returns false. 
+		 * Use this method to NoSuchElementException exceptions when
+		 * using the next method of this iterator.
+		 * 
+		 * @return - true if another item exists, otherwise false
+		 */
 		public boolean hasNext() {
 			if (cursor + 1 > size) {
 				return false;
@@ -284,6 +298,13 @@ public class ArrayCollection<T> implements Collection<T> {
 			return true;
 		}
 
+		/**
+		 * Call this method to return the item under the cursor and move
+		 * the cursor forward to the next element of the collection.
+		 * 
+		 * @return - an object of the type contained in the ArrayCollection
+		 * which created this Iterator.
+		 */
 		public T next() {
 				if (cursor == size) {
 					throw new NoSuchElementException();
@@ -296,6 +317,16 @@ public class ArrayCollection<T> implements Collection<T> {
 				return returnValue;
 		}
 
+		/**
+		 * Removes the last item returned by the "next" method of this Iterator from
+		 * the ArrayCollection which created this Iterator.
+		 * 
+		 * NOTE: you cannot call this method twice in a row or before at least 
+		 * one call to "next".
+		 * 
+		 * @throws IllegalStateException - when used twice in a row or before
+		 * at least one call to "next".
+		 */
 		public void remove() {
 			if (cursor == 0) {
 				throw new IllegalStateException();
