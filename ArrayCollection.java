@@ -50,7 +50,13 @@ public class ArrayCollection<T> implements Collection<T> {
 		data = newData;
 	}
 
-
+	/**
+	 * Adds the specified item to this collection if it's not already there
+	 * It will return a boolean based on if it's present or not
+	 * 
+	 * @param arg0 the item to be added
+	 * @return returns true if it was added and false if it wasn't
+	 */
 	public boolean add(T arg0) {
 		if (!this.contains(arg0)) {
 			data[size] = arg0;
@@ -63,6 +69,12 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+	/**
+	 * Adds all items from the specified collection into this collection without any duplicates
+	 * 
+	 * @param arg0 the collection of items to be added
+	 * @return returns true if at;east one item was added or false if none were added
+	 */
 	public boolean addAll(Collection<? extends T> arg0) {
 		int previousSize = size;
 		for (T element : arg0) {
@@ -76,11 +88,20 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+	/**
+	 * Removes all the items from the collection by setting the size to zero
+	 */
 	public void clear() {
 		
 		 size = 0;
 	}
 
+	/**
+	 * Determines whether the collection contains the specific object
+	 * 
+	 * @param arg0 the object to check if the collection contains
+	 * @return true if the collection has it, false if it doesn't
+	 */
 	public boolean contains(Object arg0) {
 		for (int i = 0; i < size; i++) {
 			if (data[i].equals(arg0)) {
@@ -90,6 +111,12 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+	/**
+     * Determines whether this collection contains all items from the specified collection
+     *
+     * @param arg0 the collection to check against
+     * @return true if all items in arg0 are contained in this collection, false if not
+	 */
 	public boolean containsAll(Collection<?> arg0) {
 		for (Object element : arg0) {
 			if (!this.contains(element)) {
@@ -99,6 +126,11 @@ public class ArrayCollection<T> implements Collection<T> {
 		return true;
 	}
 
+	/**
+	 * Checks if the collection is empty
+	 * 
+	 * @return returns true if its empty or false if it's not
+	 */
 	public boolean isEmpty() {
 		if (size == 0) {
 			return true;
@@ -106,10 +138,22 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+    /**
+     * Returns an iterator over the items in this collection
+     *
+     * @return returns a new iterator for this collection
+     */
 	public Iterator<T> iterator() {
 		return new ArrayCollectionIterator();
 	}
 
+    /**
+     * Removes the specified object from this collection or if the
+     * object is not in this collection the method returns false
+     *
+     * @param arg0 the object to be removed
+     * @return returns true if the object was removed, false if it wasn't
+     */
 	public boolean remove(Object arg0) {
 		if (!this.contains(arg0)) {
 			return false;
@@ -123,6 +167,12 @@ public class ArrayCollection<T> implements Collection<T> {
 		return true;
 	}
 
+	/**
+	 * Removes all items from this collection that are in the specified collection
+	 * 
+	 * @param arg0 the collection containing items to be removed
+	 * @return returns true if an item was removed, false if one wasn't
+	 */
 	public boolean removeAll(Collection<?> arg0) {
 		int previousSize = size;
 		Iterator<T> iterator = this.iterator();
@@ -137,6 +187,12 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+	/**
+	 * Retains only the items in this collection that are also in the specified collection
+	 * 
+	 * @param arg0 the collection containing items to retain
+	 * @return returns true if any items were removed, false if not
+	 */
 	public boolean retainAll(Collection<?> arg0) {
 		int previousSize = size;
 		Iterator<T> iterator = this.iterator();		
@@ -151,6 +207,9 @@ public class ArrayCollection<T> implements Collection<T> {
 		return false;
 	}
 
+	/**
+	 * A getter for the size of the array
+	 */
 	public int size() {
 		return size;
 	}
@@ -206,7 +265,6 @@ public class ArrayCollection<T> implements Collection<T> {
 	/**
 	 * 
 	 * @author Josi Gac and Max Barker
-	 * Describe your ArrayCollectionIterator class here.
 	 *
 	 */
 	private class ArrayCollectionIterator implements Iterator<T>
