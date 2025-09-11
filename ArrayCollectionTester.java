@@ -362,14 +362,14 @@ class ArrayCollectionTester {
 	@Test
 	void testArrayListBinarySearchTrue() {
 		binarySearch = new SearchUtil();
-		ArrayList sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
+		ArrayList<Integer> sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
 		assertTrue(binarySearch.binarySearch(sortedLarge, 75, (i1, i2) -> i1.compareTo(i2)));
 	}
 	
 	@Test
 	void testArrayListBinarySearchFalse() {
 		binarySearch = new SearchUtil();
-		ArrayList sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
+		ArrayList<Integer> sortedLarge = largeCollection.toSortedList((i1, i2) -> i1.compareTo(i2));
 		assertFalse(binarySearch.binarySearch(sortedLarge, 600, (i1, i2) -> i1.compareTo(i2)));
 	}
  }
